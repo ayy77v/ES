@@ -1,0 +1,194 @@
+<div class="col-md-12">
+  <div class="group">
+    <% if @group.editable_by?(current_user) %>
+   
+     <%= link_to("回到單字表", group_path(@group), class: "btn btn-success pull-right") %>
+          <%= link_to '返回首頁', { :controller=> 'groups', :action => 'index' }, class: "btn btn-primary pull-right" %>
+    <% end %>
+  </div> 
+  <h2><%= @group.title %></h2>
+ 
+ <table class="table">
+   <thead>
+     <tr>
+       <th class="text-primary">  單字提示</th>
+       <th class="text-primary">answers </th>
+       <th class="text-primary">description</th>
+       <th class="text-primary"> correctness </th>
+       <th colspan="2"></th>
+     </tr>
+   </thead>
+   <tbody>
+
+
+
+    <% @xy = 1  %> 
+
+  <% tnum =  @tests.count %> 
+
+  <% @tarray = [*1..tnum] %>
+
+
+   
+
+     <% @tests.each do |test| %>
+       <tr>
+        
+        <% @cs = test.content.clone %>
+
+        <% @tarray[@xy-1] = @cs %>
+
+
+      
+
+
+        <%  word = test.content
+
+    
+                realLen = word.length 
+
+                len = realLen-1;
+          if realLen >10
+            array= (0...len).to_a.shuffle.take(realLen-4)
+
+          elsif realLen>7
+            array= (0...len).to_a.shuffle.take(realLen-3)
+          elsif realLen > 4 
+            array= (0...len).to_a.shuffle.take(realLen-2)
+          elsif realLen ==4
+              array= (0...len).to_a.shuffle.take(2)
+
+          elsif realLen==3
+
+              array= (0...len).to_a.shuffle.take(2)
+
+
+          else
+            array = (0...len).to_a.shuffle.take(realLen-1) 
+          end
+           for i in 0..len
+            if array.include?i
+              word[i] = "?" 
+            end
+          end 
+    
+
+
+        %>
+ 
+        
+
+         <td class="text-success ">  <div style="letter-spacing:10px;">  <%=word %> </div>   </td> 
+
+        <td> <input type="text" id="text<%=@xy%>"  value=''   >   </td> 
+
+        <td class="text-success"><%= test.description %> </td>
+
+
+
+
+
+        <td>  <div id = "elem<%=@xy%>" style="display: block;" class="elem"  ><p class="text-danger"> *</p> </div> </td>
+
+      <% @xy=@xy+1 %>
+      
+
+
+       </tr>
+     <% end %>
+   </tbody>
+ </table>
+
+<br>
+<br>
+
+<button type="button" class="btn btn-primary" id="click-me">顯示答案</button>
+
+<%= link_to("再測一次", test_group_path(@group), class: "btn btn-danger  ")%>
+
+</div>
+
+
+<script >
+  
+
+
+
+$('#click-me').click(function(e) {
+
+    
+
+   Right();
+
+
+
+
+      e.preventDefault();
+    
+});
+
+
+function Right(){
+
+var num = <%= @xy %> -1
+
+
+var jsarray = <%= @tarray.inspect.html_safe %>; 
+
+for (i=1; i<=num; i++)
+
+{
+
+var ft = i;
+
+
+
+var st = "elem" + ft;
+
+var wt = "word" + ft;
+
+var tt= "text" + ft
+
+
+
+var wrong = document.getElementById(tt).value.toLowerCase();
+
+wrong = wrong.trim();
+
+
+var correct = jsarray[i-1].toLowerCase();
+
+correct = correct.trim();
+
+
+
+
+
+
+if (correct==wrong) {
+
+document.getElementById(st).innerHTML = 'V' 
+document.getElementById(st).classList.add('text-danger');
+
+}
+
+else {
+
+document.getElementById(st).innerHTML = jsarray[i-1];
+document.getElementById(st).classList.add('text-danger');
+
+
+}
+
+
+
+}
+
+}
+
+</script>
+
+
+
+
+

@@ -1,0 +1,32 @@
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("建立新單字表", new_group_path, class: "btn btn-primary pull-right") %>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>單字卡名稱</td>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+     
+        <tr>
+          <td>#</td>
+          <td><h5><%= link_to(group.title, group_path(group)) %> </h5></td>
+          
+          <td>
+              <%= link_to("開啟單字表", group_path(group) , class: "btn btn-sm btn-success") %>
+              <%= link_to("編輯", edit_group_path(group), class: "btn btn-sm btn-success")%>
+              <%= link_to("刪除", group_path(group),    class: "btn btn-sm btn-danger", 
+                          method: :delete, data: { confirm: "Are you sure?" } )%>
+
+                          <% end %>
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+</div>

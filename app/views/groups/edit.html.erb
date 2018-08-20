@@ -1,0 +1,17 @@
+<div class="col-md-4 col-md-offset-4">
+  <h1 class="text-info">修改單字表名稱</h1>
+
+
+
+<br>
+<br>
+<br>
+  <%= simple_form_for @group do |f| %>
+    <div class="form-group">
+      <%= f.input :title, input_html: { class: "form-control"} %>
+      
+    </div>
+    <%= f.submit "Submit", class: "btn btn-danger", data: { disable_with: "Submitting..." } %>
+      <%= link_to '返回首頁', { :controller=> 'groups', :action => 'index' }, class: "btn btn-primary pull-right" %>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<div class="col-md-4 col-md-offset-4">
+  <h1>新增單字表</h1>
+
+ 
+  
+
+<br>
+<br>
+<br>
+  <%= simple_form_for @group do |f| %>
+    <div class="form-group">
+      <%= f.input :title,  input_html: { class: "form-control"}, label: "單字表名稱" %>
+
+    </div>
+    <%= f.submit "確定", class: "btn btn-warning", data: { disable_with: "Submitting..." } %>
+    <%= link_to '返回首頁', { :controller=> 'groups', :action => 'index' }, class: "btn btn-primary pull-right" %>
+  <% end %>
+</div>
